@@ -1,14 +1,14 @@
-# Unified-Security-Pipeline 🛡️
+# Unified Security Pipeline
 
-[English]
-An integration orchestrator repository that chains reconnaissance capabilities (Async-Dork-Scanner) and polymorphic payload mutation (Payload-Mutator-Tool) into a single automated pipeline, validated via GitHub Actions CI/CD workflows.
+![Security Pipeline](https://github.com/junig33k/Unified-Security-Pipeline/actions/workflows/ci.yml/badge.svg)
 
-[Português]
-Um repositório de orquestração de integração que encadeia recursos de reconhecimento (Async-Dork-Scanner) e mutação polimórfica de payloads (Payload-Mutator-Tool) em um único pipeline automatizado, validado por fluxos de trabalho CI/CD do GitHub Actions.
+Pipeline DevSecOps intégrant une architecture modulaire pour l'automatisation des analyses de sécurité et de mutation de payloads.
 
-## Usage / Uso
-```bash
-git clone [https://github.com/VOTRE_PSEUDO/Unified-Security-Pipeline.git](https://github.com/VOTRE_PSEUDO/Unified-Security-Pipeline.git)
-cd Unified-Security-Pipeline
-python orchestrator.py
+## Composants
+- **Dork Scanner** : Analyse de cibles et collecte.
+- **Payload Mutator** : Génération et transformation de vecteurs.
+- **Orchestrator** : Pipeline principal d'exécution.
 
+## Sécurité & Qualité (CI/CD)
+- Linting : `flake8`
+- SAST (Static Application Security Testing) : `bandit`
