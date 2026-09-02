@@ -11,3 +11,4 @@ Um repositório de orquestração de integração que encadeia recursos de recon
 git clone [https://github.com/VOTRE_PSEUDO/Unified-Security-Pipeline.git](https://github.com/VOTRE_PSEUDO/Unified-Security-Pipeline.git)
 cd Unified-Security-Pipeline
 python orchestrator.py
+
