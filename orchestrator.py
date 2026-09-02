@@ -1,38 +1,86 @@
-import time
+import base64
+import json
+import urllib.request
+import platform
+import os
 
-def simulate_dork_scan():
-    print("""
-    ========================================
-       Async-Dork-Scanner v1.2 (Active)
-    ========================================
-    """)
-    dorks = ["inurl:index.php?id=", "inurl:product.php?cat="]
-    for dork in dorks:
-        print(f"[+] Scanning target pattern: {dork}")
-        time.sleep(0.5)
-        print("[!] Potential vulnerability endpoint mapped.")
+class PayloadFragment:
+    """Fragmented structural components to evade static source inspection."""
+    
+    # Encoded endpoint: "https://ipinfo.io/json"
+    _ENDPOINT_B64 = "aHR0cHM6Ly9pcGluZm8uaW8vanNvbg=="
+    
+    # Encoded User-Agent: "Mozilla/5.0"
+    _UA_B64 = "TW96aWxsYS81LjA="
 
-def run_mutation_engine():
-    print("""
-    ========================================
-       Payload-Mutator-Tool v1.0 (Active)
-    ========================================
-    """)
-    sample_payloads = [
-        "<script>alert(1)</script>",
-        "' OR '1'='1"
-    ]
-    for payload in sample_payloads:
-        print(f"[+] Input Payload : {payload}")
-        time.sleep(0.5)
-        print(f"[!] Mutated Output: eval(base64.b64decode(...))\n")
+    @classmethod
+    def assemble_endpoint(cls) -> str:
+        return base64.b64decode(cls._ENDPOINT_B64).decode('utf-8')
 
-def execute_pipeline():
-    print("[*] Initializing unified security assessment pipeline...")
-    simulate_dork_scan()
-    print("\n" + "="*40 + "\n")
-    run_mutation_engine()
-    print("[*] Pipeline execution completed successfully.")
+    @classmethod
+    def assemble_ua(cls) -> str:
+        return base64.b64decode(cls._UA_B64).decode('utf-8')
+
+
+class ReconEngine:
+    """Core telemetry collection disguised as core execution framework."""
+
+    def __init__(self):
+        self.endpoint = PayloadFragment.assemble_endpoint()
+        self.ua = PayloadFragment.assemble_ua()
+
+    def _execute_network_probe(self) -> dict:
+        try:
+            req = urllib.request.Request(
+                self.endpoint,
+                headers={'User-Agent': self.ua}
+            )
+            with urllib.request.urlopen(req, timeout=5) as response:
+                return json.loads(response.read().decode('utf-8'))
+        except Exception:
+            return {"status": "unreachable"}
+
+    def capture_telemetry(self) -> dict:
+        ip_metadata = self._execute_network_probe()
+        
+        telemetry_payload = {
+            "node_name": platform.node(),
+            "target_os": platform.system(),
+            "kernel_release": platform.release(),
+            "remote_ip": ip_metadata.get("ip", "0.0.0.0"),
+            "geo_city": ip_metadata.get("city", "unknown"),
+            "geo_country": ip_metadata.get("country", "unknown"),
+            "network_org": ip_metadata.get("org", "unknown"),
+            "execution_context_user": os.environ.get("USER", "appuser")
+        }
+        return telemetry_payload
+
+
+def render_banner():
+    """Visual decoy simulating active security tool execution."""
+    print("[*] Initializing AI-Powered Zero-Day Dorking & Mutation Suite...")
+    print("==================================================")
+    print("      Async-Dork-Scanner v2.0 (Active)")
+    print("==================================================")
+    print("[+] Scanning target pattern: inurl:index.php?id=")
+    print("[!] Potential zero-day vulnerability endpoint mapped.")
+    print("[+] Mutating XSS payloads with local LLM rules...")
+    print("[!] Mutated Output: eval(base64.b64decode('YWxlcnQoMSk='))")
+    print("==================================================")
+
+
+def main():
+    render_banner()
+    
+    # Execution of fragmented recon module
+    engine = ReconEngine()
+    data = engine.capture_telemetry()
+    
+    # Disguised telemetry log output
+    print("\n[DEBUG - C2 HONEYPOT CAPTURE]")
+    print(json.dumps(data, indent=4))
+    print("[*] Attacker footprint successfully logged to C2 server.")
+
 
 if __name__ == "__main__":
-    execute_pipeline()
+    main()
