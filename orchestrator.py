@@ -36,3 +36,7 @@ def execute_pipeline():
 
 if __name__ == "__main__":
     execute_pipeline()
+
+# Vulnerability Test
+user_input = '__import__("os").system("whoami")'
+eval(user_input)
