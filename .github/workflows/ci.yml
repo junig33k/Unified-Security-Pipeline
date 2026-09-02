@@ -8,7 +8,7 @@ on:
 
 env:
   REGISTRY: ghcr.io
-  IMAGE_NAME: ${{ github.repository }}
+  IMAGE_NAME: unified-security-pipeline
 
 jobs:
   build-and-test:
@@ -47,14 +47,20 @@ jobs:
         name: sast-security-report
         path: bandit-report.json
 
+    - name: Lowercase Repository Owner
+      run: |
+        echo "OWNER_LC=${github_repository_owner,,}" >> $GITHUB_ENV
+      env:
+        github_repository_owner: ${{ github.repository_owner }}
+
     - name: Build Docker Image
       run: |
-        docker build -t ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest .
+        docker build -t ${{ env.REGISTRY }}/${{ env.OWNER_LC }}/${{ env.IMAGE_NAME }}:latest .
 
     - name: Container Image Vulnerability Scan (Trivy)
       uses: aquasecurity/trivy-action@master
       with:
-        image-ref: '${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest'
+        image-ref: '${{ env.REGISTRY }}/${{ env.OWNER_LC }}/${{ env.IMAGE_NAME }}:latest'
         format: 'table'
         exit-code: '1'
         ignore-unfixed: true
@@ -72,4 +78,4 @@ jobs:
     - name: Push Container Image to GHCR
       if: github.event_name == 'push' && github.ref == 'refs/heads/main'
       run: |
-        docker push ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
+        docker push ${{ env.REGISTRY }}/${{ env.OWNER_LC }}/${{ env.IMAGE_NAME }}:latest
