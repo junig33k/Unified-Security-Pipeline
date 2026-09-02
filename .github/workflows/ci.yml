@@ -30,7 +30,15 @@ jobs:
 
     - name: Static Application Security Testing (SAST)
       run: |
+        bandit -r . -f json -o bandit-report.json || true
         bandit -r . -ll
+
+    - name: Upload Security Report Artifact
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: sast-security-report
+        path: bandit-report.json
 
     - name: Run Orchestrator Pipeline
       run: |
