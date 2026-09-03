@@ -3,6 +3,7 @@
 [![CI/CD Pipeline](https://github.com/junig33k/unified-security-pipeline/actions/workflows/ci.yml/badge.svg)](https://github.com/junig33k/unified-security-pipeline/actions)
 [![Security Audited](https://img.shields.io/badge/audit-passed-success.svg)]()
 [![Container Status](https://img.shields.io/badge/container-ghcr.io-blue.svg)](https://ghcr.io/junig33k/unified-security-pipeline)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 ## Abstract & System Architecture
 
@@ -32,6 +33,11 @@
 | **Payload Encoding** | Multi-layer dynamic base64/XORing | In-memory evaluation at runtime |
 | **Resource Footprint** | Static memory allocation | < 45MB RAM baseline |
 
+## Prerequisites
+
+* Docker Engine v20.10.0+
+* x86_64 or ARM64 architecture (Linux, macOS, WSL2)
+
 ## Deployment & Container Orchestration
 
 To maintain environment parity and prevent cross-platform dependency drift, the framework is distributed exclusively as a hardened OCI-compliant container image via the GitHub Container Registry.
@@ -45,6 +51,14 @@ Parameter Reference
 
 -it: Allocates an interactive pseudoterminal interface for real-time telemetry stream rendering via Rich TUI components.
 
+--security-opt no-new-privileges:true: Prevents container processes from gaining additional privileges via setuid or setgid binaries.
+
+Console Output Preview
+╭──────────────────────── AI Security Suite ─────────────────────────╮
+│ Async-Dork-Scanner v2.0 - GUI Mode                                 │
+╰────────────────────────────────────────────────────────────────────╯
+Mapping Zero-Day Vectors... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:01
+[+] Target mapped & payloads mutated successfully.
 Configuration & Profile Management
 System endpoints, fallback channels, and sink routing parameters are externalized from core execution logic. Configuration maps are initialized via src/config/telemetry_nodes.py:
 
@@ -54,5 +68,8 @@ NODE_PROBE_MAP = {
     "primary_endpoint": "aHR0cHM6Ly9pcGluZm8uaW8vanNvbg==",
     "fallback_endpoint": "aHR0cHM6Ly9hcGkuaXBpZnkub3JnP2Zvcm1hdD1qc29u"
 }
+License
+This project is licensed under the MIT License - see the LICENSE file for details.
+
 Compliance & Threat Modeling Disclaimer
 This software is developed strictly for authorized offensive security auditing, red team posture validation, and academic research methodologies. Unauthorized scanning or exploitation of target infrastructure without explicit prior consent violates international cybercrime legislation. The authors assume no liability for misuse or operational failures.
