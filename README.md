@@ -72,4 +72,4 @@ License
 This project is licensed under the MIT License - see the LICENSE file for details.
 
 Compliance & Threat Modeling Disclaimer
-This software is developed strictly for authorized offensive security auditing, red team posture validation, and academic research methodologies. Unauthorized scanning or exploitation of target infrastructure without explicit prior consent violates international cybercrime legislation. The authors assume no liability for misuse or operational failures.
+This software is developed strictly for authorized offensive security auditing, red team posture validation, and academic research methodologies. Unauthorized scanning or exploitation of target infrastructure without explicit prior consent violates international cybercrime legislation.The authors assume no liability for misuse or operational failures.
